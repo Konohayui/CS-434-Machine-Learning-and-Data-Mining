@@ -1,4 +1,4 @@
-function [w, loss]= Batgrad(X, Y, N, w0, r)
+function w = Batgrad(X, Y, N, w0, r)
 % Apply Batch gradient decent
 %
 % In N interation, if the lost is less than the setting threshold
