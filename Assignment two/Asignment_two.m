@@ -19,9 +19,9 @@ Y_test = Test_data(:, 257);
 learning_rate = 0.5;
 num_lr = length(learning_rate); % obtain the number of learning rate 
 
-% obtain the norm of each w and lost with different learning rate
+% obtain the norm of each w and loss with different learning rate
 w_norm = zeros(length(learning_rate), 1); 
-lost = w_norm;
+loss = w_norm;
 
 % initial optimal weight
 initial_w = rand(size(X_train, 2), 1);
@@ -33,10 +33,10 @@ for r = 1:num_lr
 end
 
 figure
-plot(w_norm, lost, 'o-');
+plot(w_norm, loss, 'o-');
 title('Batch Gradient Decent with Different Learning Rate')
 xlabel('Learning Rate')
-ylabel('||w||')
+ylabel('Loss')
 hold off
 
 %% Problem Two
