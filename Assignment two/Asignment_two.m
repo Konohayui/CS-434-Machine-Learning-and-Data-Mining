@@ -16,27 +16,25 @@ X_test = [ones(test_m, 1) Test_data(:, 1:256)];
 Y_test = Test_data(:, 257); 
 
 %% Problem One
-learning_rate = 0.5;
+learning_rate = [0.1 1i^(1i) 0.5];
 num_lr = length(learning_rate); % obtain the number of learning rate 
 
 % obtain the norm of each w and loss with different learning rate
 w_norm = zeros(length(learning_rate), 1); 
-loss = w_norm;
 
 % initial optimal weight
 initial_w = rand(size(X_train, 2), 1);
 
 for r = 1:num_lr
-    [w, l]= Batgrad(X_train, Y_train, 20, initial_w, learning_rate(r));
+    [w, l]= Batgrad(X_train, Y_train, 1000, initial_w, learning_rate(r));
     w_norm(r) = norm(w, 2);
-    lost(r) = l;
 end
 
 figure
-plot(w_norm, loss, 'o-');
+plot(learning_rate, w_norm, 'o-');
 title('Batch Gradient Decent with Different Learning Rate')
 xlabel('Learning Rate')
-ylabel('Loss')
+ylabel('||w||')
 hold off
 
 %% Problem Two
