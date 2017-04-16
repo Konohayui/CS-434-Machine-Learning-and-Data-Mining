@@ -34,7 +34,7 @@ end
 
 figure
 plot(1:N, wNorm, '-')
-ylabel('Weight Norm');
+ylabel('Weight Norm')
 xlabel('Iteration')
 title('Batch Gradient Decent')
 hold off
