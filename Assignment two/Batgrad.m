@@ -12,7 +12,7 @@ wNorm = zeros(N, 1); % store the norm of weight in each interation
 for iter = 1:N
     delta = zeros(features, 1); % initialize error
     
-    for n = 1:(samples*(2/3))
+    for n = 1:samples
         h = sigmoid(X(n, :)*w); % hypothese function  
         delta = delta + (h - Y(n))*X(n, :)';
     end
