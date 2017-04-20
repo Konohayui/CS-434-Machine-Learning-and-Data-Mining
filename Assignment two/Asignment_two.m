@@ -16,7 +16,7 @@ X_test = [ones(Test_samples, 1) Test_data(:, 1:256)];
 Y_test = Test_data(:, 257); 
 
 %% Problem One
-learning_rate = [10e-13 10e-9 10e-8];
+learning_rate = (7:0.001:7.18)*1e-8;
 num_lr = length(learning_rate); % obtain the number of learning rate 
 
 % obtain the norm of each w and loss with different learning rate
@@ -26,34 +26,42 @@ loss = w_norm;
 % initial optimal weight
 initial_w = zeros(size(X_train, 2), 1);
 
+% initialize the first loss
+pre_loss = 0;
+
 for r = 1:num_lr
     w = Batgrad(X_train, Y_train, 100, initial_w, learning_rate(r), 0);
     w_norm(r) = sqrt(w'*w);
     loss(r) = LossFunc(X_train, Y_train, w);
+    if abs(loss(r) - pre_loss) < 1e-3 
+        break
+    end
+    pre_loss = loss(r);
 end
 
 figure
-plot(w_norm, loss, 'o-');
+plot(learning_rate, loss, 'o-');
 title('Batch Gradient Decent with Different Learning Rate')
-xlabel('||w||')
+xlabel('Learning Rate')
 ylabel('Loss')
 hold off
 
-% r=10e-8 is the desire learning rate. If we pick r greater than 10e-8, our
-% prediction will always one; if we pick r somewhat less than 10e-8, our
-% prediction will always or get close to zero. In each case, our loss will
-% be not a number (NaN) or close to positive/negative infinity
+% r = 7.16e-8 is our the desire learning rate. 
+% If we pick r greater than 7.16e-8, our prediction will always one; 
+% if we pick r somewhat less than 7.16e-8, 
+% our prediction will always or get close to zero. In each case, our loss 
+% will be not a number (NaN) or close to positive/negative infinity
 
 %% Problem Two
 Iterations = [100 200 300 400 500];
-Num_ite = length(Iterations);
+num_ite = length(Iterations);
 
 % store training accuracy and testing accuracy
-train_accuracy = zeros(Num_ite, 1);
+train_accuracy = zeros(num_ite, 1);
 test_accuracy = train_accuracy;
 
-for i = 1:Num_ite
-    train_w = Batgrad(X_train, Y_train, Iterations(i), initial_w, 10e-8, 0);
+for i = 1:num_ite
+    train_w = Batgrad(X_train, Y_train, Iterations(i), initial_w, 7.16e-8, 0);
     
     % Compute training accuracy
     train_pre = logclassify(sigmoid(X_train*train_w)); % Prediction on training data
@@ -78,9 +86,10 @@ hold off
 
 %% Problem Three
 %
-% If we differential loss function respect to w, we have
-% $$\sum_{i=1}^ml(g(w^Tx^i,y^i))+\lambda||w||_2$$
+% If we differentiate the loss function respect to w, we have
+% $$\sum_{i=1}^m l(g(w^Tx^i,y^i))x^i+\lambda||w||_2$$
 %
+
 %% Problem Four
 Lambda = [10e-3 10e-2 10e-1 1 10e1 10e2 10e3];
 Num_lam = length(Lambda);
@@ -90,7 +99,7 @@ re_train_accuracy = zeros(Num_lam, 1);
 re_test_accuracy = re_train_accuracy;
 
 for k = 1:Num_lam
-    re_train_w = Batgrad(X_train, Y_train, 200, initial_w, 10e-8, Lambda(k));
+    re_train_w = Batgrad(X_train, Y_train, 200, initial_w, 7.16e-8, Lambda(k));
     
     % Compute training accuracy
     re_train_pre = logclassify(sigmoid(X_train*re_train_w)); % Prediction on training data
