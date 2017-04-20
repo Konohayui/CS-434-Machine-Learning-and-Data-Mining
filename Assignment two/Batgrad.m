@@ -14,17 +14,17 @@ for iter = 1:N
     
     for n = 1:samples
         h = sigmoid(X(n, :)*w); % hypothese function  
-        delta = delta + (h - Y(n))*X(n, :)';
+        delta = delta + (Y(n) - h)*X(n, :)';
     end
-    w = w - learning_rate*(delta + lambda*sqrt(w'*w)); % update optimal weight vector
+    w = w + learning_rate*(delta + lambda*w); % update optimal weight vector
     wNorm(iter) = norm(w, 2); 
 end
 
-figure
-plot(1:N, wNorm, '-')
-ylabel('Weight Norm')
-xlabel('Iteration')
-title('Batch Gradient Decent')
-hold off
+% figure
+% plot(1:N, wNorm, '-')
+% ylabel('Weight Norm')
+% xlabel('Iteration')
+% title('Batch Gradient Decent')
+% hold off
 
 end
