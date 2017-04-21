@@ -36,7 +36,13 @@ for r = 1:num_lr
     end
 end
 
-hold off
+% obtain the minimun loss with the best learning rate
+min_loss = min(loss); 
+best_rate = learning_rate(loss == min_loss);
+
+fprintf(['The minimum loss is %d', num2str(min_loss), '%d\n'])
+fprintf(' ')
+fprintf(['The best learning rate is %d', num2str(best_rate, '%d\n')])
 
 figure
 plot(learning_rate, loss, 'o-');
@@ -44,8 +50,6 @@ title('Batch Gradient Decent with Different Learning Rate')
 xlabel('Learning Rate')
 ylabel('Loss')
 hold off
-
-% r = 1e-7 is our the desire learning rate. 
 
 %% Problem Two
 Iterations = [100 200 300 400 500];
@@ -56,7 +60,8 @@ train_accuracy = zeros(num_ite, 1);
 test_accuracy = train_accuracy;
 
 for i = 1:num_ite
-    train_w = Batgrad(X_train, Y_train, Iterations(i), initial_w, 1e-7, 0);
+    train_w = Batgrad(X_train, Y_train, Iterations(i),...
+        initial_w, best_rate, 0);
     
     % Compute training accuracy
     train_pre = logclassify(sigmoid(X_train*train_w)); % Prediction on training data
@@ -82,11 +87,11 @@ hold off
 %% Problem Three
 %
 % If we differentiate the loss function respect to w, we have
-% $$\sum_{i=1}^m l(g(w^Tx^i,y^i))x^i+\lambda||w||_2$$
+% $$\sum_{i=1}^m l(g(w^Tx^i,y^i))x^i+\lambda*w$$
 %
 
 %% Problem Four
-Lambda = 10.^(-10:2:10);
+Lambda = 10.^(-5:1:5);
 Num_lam = length(Lambda);
 
 % store training accuracy and testing accuracy with regularization term
@@ -94,7 +99,8 @@ re_train_accuracy = zeros(Num_lam, 1);
 re_test_accuracy = re_train_accuracy;
 
 for k = 1:Num_lam
-    re_train_w = Batgrad(X_train, Y_train, 200, initial_w, 1e-7, Lambda(k));
+    re_train_w = Batgrad(X_train, Y_train, 200, initial_w,...
+        best_rate, Lambda(k));
     
     % Compute training accuracy
     re_train_pre = logclassify(sigmoid(X_train*re_train_w)); % Prediction on training data
@@ -113,7 +119,3 @@ xlabel('Lambda')
 ylabel('Accuracy')
 legend('Training Accuracy', 'Testing Accuracy')
 hold off
-
-% If we puted small enough regularization to the optimal weight, we would
-% obtain good accuracy; if too much regularization, the accuracy will drop
-% since we tend to predict one more than to predict zero.
