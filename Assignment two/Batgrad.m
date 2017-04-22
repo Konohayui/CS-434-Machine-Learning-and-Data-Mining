@@ -1,14 +1,17 @@
-function w = Batgrad(X, Y, N, w0, learning_rate, lambda)
+function output = Batgrad(X, Y, N, w0, learning_rate, lambda, options)
 % Apply Batch gradient decent
 %
-% In N interation, if the lost is less than the setting threshold
+% In N interation, if the loss is less than the setting threshold
 % stop computing the optimal weight.
-
+% options = 1, output is loss
+% options = 0, output is w
+%
 % initialize optimal weight vector
+%
+
 [samples, features] = size(X);
 w = w0; %obtain initial w
-wNorm = zeros(N, 1); % store the norm of weight in each interation
-
+loss = zeros(N, 1); 
 for iter = 1:N
     delta = zeros(features, 1); % initialize error
     
@@ -17,14 +20,14 @@ for iter = 1:N
         delta = delta + (Y(n) - h)*X(n, :)';
     end
     w = w + learning_rate*(delta + lambda*w); % update optimal weight vector
-    wNorm(iter) = norm(w, 2); 
+    loss(iter) = LossFunc(X, Y, w);
 end
 
-% figure
-% plot(1:N, wNorm, '-')
-% ylabel('Weight Norm')
-% xlabel('Iteration')
-% title('Batch Gradient Decent')
-% hold off
-
+if options == 1
+    output = loss;
 end
+if options == 0
+    output = w;
+end
+end
+                
