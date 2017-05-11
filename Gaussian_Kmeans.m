@@ -4,7 +4,6 @@ sigma = eye(2,2);
 mu = [2, 3];
 r = mvnrnd(mu, sigma, 10);
 m1 = size(r, 1);
-leg1 = num2cell(r);
 figure  
 hold on
 for c = 1:m1
