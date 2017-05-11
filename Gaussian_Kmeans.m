@@ -11,7 +11,7 @@ for c = 1:m1
   plot(ncr(:,1), ncr(:,2), '*')
   text(r(c,1), r(c,2), num2str(c))
 end
-legend(strread(num2str(1:10),'%s'))
+legend(strread(num2str(1:m1),'%s'))
 plot(r(:,1), r(:,2), '+')
 
 hold off
