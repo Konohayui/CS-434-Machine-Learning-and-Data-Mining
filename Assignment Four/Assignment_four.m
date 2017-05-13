@@ -21,14 +21,15 @@ for k = 1:K
 end
 
 %% K-means Problem Two
-K2 = 2:10;
+K2 = 2:4;
 L = length(K2);
+iteration = 10;
 SSE = zeros(L, 1);
 
-for k = K2
-    minerr = zeros(L, 1);
-    for itr = 1:L
-        [G, S] = Kmeans(X, k);
+for k = 1:L
+    minerr = zeros(iteration, 1);
+    for itr = 1:iteration
+        [G, S] = Kmeans(X, K2(k));
         minerr(itr) = S(end);
     end
     SSE(k) = min(minerr);
