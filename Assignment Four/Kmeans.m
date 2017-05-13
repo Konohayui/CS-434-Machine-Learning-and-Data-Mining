@@ -1,4 +1,4 @@
-function sse = Kmeans(X, K)
+function [group, sse] = Kmeans(X, K)
 samples = size(X, 1);
 iter = 0;
 center = X(randperm(samples, K), :);
@@ -27,5 +27,5 @@ while abs(sse(end) - sse(end-1)) > 1e-8
 end
 
 sse = sse(3:end);
-
+group = idx;
 end
