@@ -19,7 +19,7 @@ while abs(sse(end) - sse(end-1)) > 1e-8
         pos = find(idx == k);
         if size(pos) ~= 0
             center(k,:) = mean(X(pos,:));
-            error = error + sum(sum((X(pos,:) - center(k,:).^2)));
+            error = error + sum(sum((X(pos,:) - center(k,:)).^2));
         end
     end
     sse = [sse, error];
