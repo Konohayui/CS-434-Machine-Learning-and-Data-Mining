@@ -21,7 +21,7 @@ for k = 1:K
 end
 
 %% K-means Problem Two
-K2 = 2:4;
+K2 = 2:10;
 L = length(K2);
 iteration = 10;
 SSE = zeros(L, 1);
