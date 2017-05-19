@@ -1,11 +1,16 @@
-function image = ReadImage(group, X, k)
-Img = zeros(28, 560);
+function image = ReadImage(group, X, k, n)
+Img = zeros(n*28, 560);
 pos = find(group == k);
-ind = randperm(length(pos), 20);
-L = length(ind);
+ind = randperm(length(pos), n*20);
+ite = 0;
 
-for l = 1:L    
-    Img(:, (28*(l-1) + 1):(28*l)) = reshape(X(pos(ind(l)), :), 28, 28);
+while ite < n
+    for l = 1:20    
+        idx = ind((ite + 1)*l);
+        Img((ite*28 + 1):(28*(ite + 1)), (28*l + 1):(28*(l + 1))) = ...
+            reshape(X(pos(idx), :), 28, 28);
+    end
+    ite = ite + 1;
 end
 
 image = imshow(Img);
