@@ -1,23 +1,23 @@
 clc; close all; clear all;
 
 %% Load Data
-X = load('data.txt');
+X = load('data-1.txt');
 
 %% K-means Problem One
-K = 5;
-[group, sse]= Kmeans(X, K);
+K = 4;
+[group, sse] = Kmeans(X, K);
 iter = length(sse);
 
 figure
 plot(1:iter, sse, '-o')
 xlabel('iteration')
 ylabel('sse')
-title(['K-Means Clusering with k = ', num2str(K)])
+title(['K-Means Clusering with K = ', num2str(K)])
 
 %% Read Image
 for k = 1:K
     figure
-    image = ReadImage(group, X, k);
+    image = ReadImage(group, X, k, 30);
 end
 
 %% K-means Problem Two
@@ -29,8 +29,23 @@ SSE = zeros(L, 1);
 for k = 1:L
     minerr = zeros(iteration, 1);
     for itr = 1:iteration
-        [G, S] = Kmeans(X, K2(k));
+        [~, S] = Kmeans(X, K2(k));
         minerr(itr) = S(end);
     end
     SSE(k) = min(minerr);
 end
+
+figure
+plot(2:10, SSE, '-o')
+xlabel('K')
+ylabel('SSE')
+title('K-Means Clusering with K = 2 to 10')
+
+%% Single Link
+[clust, infoM] = SingleL(X);
+clust = cell2mat(clust);
+clust = [clust; infoM(2,1) infoM(3,1), infoM(3,2)];
+dendrogram(clust)
+
+%% Complete Link
+% Same 
