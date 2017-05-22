@@ -30,7 +30,7 @@ while true
         infoMatrix(min_j + 1, 1) = c;
         % Complete link
         % max_dist = max(DistM(:,min_i), DistM(:,min_j));
-        min_dist = max(DistMatrix(:,min_i), DistMatrix(:,min_j));
+        min_dist = min(DistMatrix(:,min_i), DistMatrix(:,min_j));
         min_dist(min_j) = 0;
         DistMatrix(:,min_j) = min_dist;
         DistMatrix(min_j,:) = min_dist';
