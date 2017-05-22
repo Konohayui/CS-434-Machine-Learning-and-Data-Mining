@@ -1,6 +1,7 @@
 function [clust, infoMatrix] = SingleL(X)
 % test example
 % X = [1 1; 1.5 1.5; 5 5; 3 4; 4 4; 3 3.5];
+% X = [1 2; 2.5 4.5; 2 2;4 1.5; 4 2.5];
 % http://people.revoledu.com/kardi/tutorial/Clustering/Online-Hierarchical-Clustering.html
 
 samples = size(X, 1);
