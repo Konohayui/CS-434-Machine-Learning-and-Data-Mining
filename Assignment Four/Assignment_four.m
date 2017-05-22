@@ -35,9 +35,18 @@ for k = 1:L
     SSE(k) = min(minerr);
 end
 
+figure
+plot(K2, SSE)
+xlabel('K')
+ylabel('SSE')
+title('SSE with K = 2 to 10')
+
 %% Single Link
 [clust, infoM] = SingleL(X);
 clust = cell2mat(clust);
 clust = [clust; infoM(2,1) infoM(3,1), infoM(3,2)];
 figure
 dendrogram(clust)
+
+%% Complete Link
+% same
