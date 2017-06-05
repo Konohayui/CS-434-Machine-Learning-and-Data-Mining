@@ -76,7 +76,7 @@ while ~converge
     U = R + gamma*max(M,[],2);
     
     % check convergence
-    if abs(U - old_U) < delta
+    if abs(sum(U - old_U)) < delta
         converge = 1;
     end
     
