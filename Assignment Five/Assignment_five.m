@@ -34,7 +34,7 @@ P1 = zeros(states, actions);
 for a = 1:actions
     P1(:,a) = T(:,:,a)*U1;
 end
-Pi_1 = max(P1,[],2); % optimal policy for \beta = 0.1
+[~, Pi_1] = max(P1,[],2); % optimal policy for \beta = 0.1
 fprintf('the optimal policy is \n')
 display(Pi_1)
 
@@ -50,7 +50,7 @@ P2 = zeros(states, actions);
 for a = 1:actions
     P2(:,a) = T(:,:,a)*U2;
 end
-Pi_2 = max(P2,[],2); % optimal policy for \beta = 0.9
+[~, Pi_2] = max(P2,[],2); % optimal policy for \beta = 0.9
 fprintf('the optimal policy is \n')
 display(Pi_2)
 
